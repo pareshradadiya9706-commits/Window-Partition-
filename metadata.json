@@ -1,0 +1,6 @@
+{
+  "name": "Dharam Window",
+  "description": "Architectural Aluminum & UPVC Window Section Calculator, Cutting List Optimizer, Cross-Section Visualizer and Cost Estimator",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
