@@ -1,9 +1,0 @@
-*.pyc
-__pycache__/
-.gradle/
-build/
-app/
-.build-outputs/
-*.hprof
-debug.keystore
-debug.keystore.base64
