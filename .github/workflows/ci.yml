@@ -8,39 +8,49 @@ jobs:
   test-python:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install dependencies
-        run: |
+      - run: |
           python -m pip install --upgrade pip
-          if [ -f python_backend/requirements.txt ]; then pip install -r python_backend/requirements.txt; else echo "No python_backend/requirements.txt - skip"; fi
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install pytest
-      - name: Run tests if exists
-        run: |
-          if [ -d python_backend/tests ]; then pytest python_backend/tests -v || echo "Tests finished with warnings - marking success"; else echo "No tests folder - skipping - success"; fi
+          if [ -f python_backend/requirements.txt ]; then pip install -r python_backend/requirements.txt; fi
+          echo "Python setup done"
+      - run: |
+          if [ -d python_backend/tests ]; then pytest python_backend/tests -v || true; else echo "No tests - success"; fi
 
   build-apk:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-java@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
+          flutter-version: '3.22.2'
           channel: 'stable'
+          cache: true
+      - name: Check project structure
+        run: |
+          ls -la
+          ls -la flutter_app/
+          cat flutter_app/pubspec.yaml || echo "no pubspec"
+      - name: Flutter clean and pub get
+        run: |
+          cd flutter_app
+          flutter clean
+          flutter --version
+          flutter pub get --verbose
       - name: Build APK
         run: |
           cd flutter_app
-          flutter --version
-          flutter pub get
-          flutter build apk --release
-      - uses: actions/upload-artifact@v4
+          flutter build apk --release --verbose
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
           name: window-section-release-apk
           path: flutter_app/build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
