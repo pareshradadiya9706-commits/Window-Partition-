@@ -30,20 +30,24 @@ jobs:
           java-version: '17'
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.2'
+          flutter-version: '3.24.0'
           channel: 'stable'
           cache: true
-      - name: Check project structure
+      - name: Prepare Flutter Android project
         run: |
-          ls -la
-          ls -la flutter_app/
-          cat flutter_app/pubspec.yaml || echo "no pubspec"
+          cd flutter_app
+          if [ ! -d "android" ]; then
+            echo "android folder not found - creating android platform scaffolding"
+            flutter create --platforms=android .
+          else
+            echo "android folder already exists"
+          fi
       - name: Flutter clean and pub get
         run: |
           cd flutter_app
           flutter clean
           flutter --version
-          flutter pub get --verbose
+          flutter pub get
       - name: Build APK
         run: |
           cd flutter_app
