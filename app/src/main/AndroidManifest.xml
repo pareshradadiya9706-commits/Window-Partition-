@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WindowSection">
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.windowsection.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.WindowSection">
             <intent-filter>

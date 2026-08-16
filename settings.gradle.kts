@@ -1,14 +1,7 @@
 pluginManagement {
     repositories {
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
+        google()
         mavenCentral()
-        maven { url = uri("https://chaquo.com/maven") }
         gradlePluginPortal()
     }
 }
@@ -17,7 +10,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://chaquo.com/maven") }
+        maven { url = java.net.URI("https://chaquo.com/maven") }
     }
 }
 

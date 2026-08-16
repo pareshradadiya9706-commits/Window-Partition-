@@ -1,0 +1,6 @@
+.gradle/
+.build-outputs/
+build/
+.kotlin/
+__pycache__/
+*.pyc
